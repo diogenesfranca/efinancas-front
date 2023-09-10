@@ -1,24 +1,21 @@
 import { Helmet } from 'react-helmet-async';
 import { Container, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { useEffect, useState } from 'react';
+import { listarCategorias } from 'src/apis/eFinancasApi';
 
 const columns: GridColDef[] = [
-  { field: 'categoria', headerName: 'Categoria', width: 130 }  
-];
-
-const rows = [
-  { id: 1, categoria: 'Snow' },
-  { id: 2, categoria: 'Lannister' },
-  { id: 3, categoria: 'Lannister' },
-  { id: 4, categoria: 'Stark' },
-  { id: 5, categoria: 'Targaryen' },
-  { id: 6, categoria: 'Melisandre' },
-  { id: 7, categoria: 'Clifford' },
-  { id: 8, categoria: 'Frances' },
-  { id: 9, categoria: 'Roxie' },
+  { field: 'descricao', headerName: 'Categoria', width: 130 }
 ];
 
 export default function CategoriasPage() {
+  const [rows, setRows] = useState([]);
+  useEffect(() => {
+    listarCategorias().then((response) => {
+      setRows(response.data);
+    });
+  }, []
+  );
   return (
     <>
       <Helmet><title>EFinancas</title></Helmet>
@@ -35,7 +32,7 @@ export default function CategoriasPage() {
               paginationModel: { page: 0, pageSize: 5 },
             },
           }}
-          pageSizeOptions={[5, 10]}          
+          pageSizeOptions={[5, 10]}
         />
       </Container>
     </>
