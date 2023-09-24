@@ -9,4 +9,6 @@ const cadastrarCategoria = (categoria) => axios.post(`${apiUrl}/v1/categorias?ca
 
 const atualizarCategoria = (id, categoria) => axios.put(`${apiUrl}/v1/categorias/${id}?categoria=${categoria}`);
 
-export { obterCategoria, listarCategorias, cadastrarCategoria, atualizarCategoria };
+const removerCategoria = id => axios.delete(`${apiUrl}/v1/categorias/${id}`);
+
+export { obterCategoria, listarCategorias, cadastrarCategoria, atualizarCategoria, removerCategoria };

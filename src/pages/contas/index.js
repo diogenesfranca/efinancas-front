@@ -1,59 +1,59 @@
 import { Helmet } from 'react-helmet-async';
-import { Button, Container, MenuItem, Stack, Typography } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { MenuItem } from '@mui/material';
+import { GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
-import { listarContas } from 'src/apis/eFinancasContasApi';
-import Iconify from 'src/components/iconify';
+import { listarContas, removerConta } from 'src/apis/eFinancasContasApi';
 import { useNavigate } from "react-router-dom";
-
-function AlterarButton({ id }) {
-  const navigate = useNavigate();
-  return <MenuItem onClick={() => navigate(`/contas/cadastro/${id}`)}><Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />Alterar</MenuItem>;
-}
-
-const columns: GridColDef[] = [
-  { field: 'descricao', headerName: 'Conta', width: 160 },
-  { field: 'saldo', headerName: 'Saldo', width: 160 },
-  { field: 'acao', headerName: 'Ação', sortable: false, width: 130, renderCell: params => <AlterarButton id={params.id} /> }
-];
+import Tabela from 'src/components/tabela';
+import CreateIcon from '@mui/icons-material/Create';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function () {
   const navigate = useNavigate();
 
   const [rows, setRows] = useState([]);
+  const [itemRemovido, setItemRemovido] = useState('');
+
+  const removerConfirmacao = async function (id, descricao) {
+    if (window.confirm(`Deseja realmente remover a conta ${descricao}?`) === true) {
+      try {
+        await removerConta(id);
+        setItemRemovido(id);
+      }
+      catch (e) {
+        alert(e);
+      }
+    }
+  }
+
+  const columns: GridColDef[] = [
+    { field: 'descricao', headerName: 'Conta', width: 160 },
+    { field: 'saldo', headerName: 'Saldo', width: 160 },
+    {
+      field: 'acao', headerName: 'Ação', sortable: false, width: 260, renderCell: params =>
+        <>
+          <MenuItem onClick={() => navigate(`/contas/cadastro/${params.id}`)}>
+            <CreateIcon />Alterar
+          </MenuItem>
+          <MenuItem onClick={() => { removerConfirmacao(params.id, params.row.descricao) }}>
+            <DeleteIcon />Remover
+          </MenuItem>
+        </>
+    }
+  ];
 
   useEffect(() => {
     async function carregarDados() {
-      const response = await listarContas();      
+      const response = await listarContas();
       setRows(response.data);
     }
     carregarDados();
-  }, []);
+  }, [itemRemovido]);
 
   return (
     <>
       <Helmet><title>EFinancas</title></Helmet>
-
-      <Container maxWidth="xl">
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Contas
-        </Typography>
-        <Stack spacing={2}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 }
-              }
-            }}
-            pageSizeOptions={[10, 20]}
-          />
-          <div>
-            <Button variant="contained" onClick={() => {navigate('/contas/cadastro') }}>Cadastrar Conta</Button>
-          </div>
-        </Stack>
-      </Container>
+      <Tabela titulo='Contas' textoBotao='Cadastrar Conta' rows={rows} columns={columns} onClick={() => { navigate('/contas/cadastro') }} />
     </>
   );
 }

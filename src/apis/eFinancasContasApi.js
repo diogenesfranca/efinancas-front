@@ -9,4 +9,6 @@ const cadastrarConta = (descricao, saldo) => axios.post(`${apiUrl}/v1/contas`, {
 
 const atualizarConta = (id, descricao, saldo) => axios.put(`${apiUrl}/v1/contas/${id}`, { descricao, saldo });
 
-export { obterConta, listarContas, cadastrarConta, atualizarConta };
+const removerConta = id => axios.delete(`${apiUrl}/v1/contas/${id}`);
+
+export { obterConta, listarContas, cadastrarConta, atualizarConta, removerConta };
