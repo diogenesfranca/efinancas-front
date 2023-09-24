@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { Container, MenuItem, Typography } from '@mui/material';
+import { Button, Container, MenuItem, Stack, Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import { listarContas } from 'src/apis/eFinancasContasApi';
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 function AlterarButton({ id }) {
   const navigate = useNavigate();
-  return <MenuItem onClick={() => navigate(`/contas/alterar/${id}`)}><Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />Alterar</MenuItem>;
+  return <MenuItem onClick={() => navigate(`/contas/cadastro/${id}`)}><Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />Alterar</MenuItem>;
 }
 
 const columns: GridColDef[] = [
@@ -18,6 +18,8 @@ const columns: GridColDef[] = [
 ];
 
 export default function () {
+  const navigate = useNavigate();
+
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -36,16 +38,21 @@ export default function () {
         <Typography variant="h4" sx={{ mb: 5 }}>
           Contas
         </Typography>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 }
-            }
-          }}
-          pageSizeOptions={[5, 10]}
-        />
+        <Stack spacing={2}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 }
+              }
+            }}
+            pageSizeOptions={[10, 20]}
+          />
+          <div>
+            <Button variant="contained" onClick={() => {navigate('/contas/cadastro') }}>Cadastrar Conta</Button>
+          </div>
+        </Stack>
       </Container>
     </>
   );

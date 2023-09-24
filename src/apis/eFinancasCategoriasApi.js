@@ -5,6 +5,8 @@ const obterCategoria = (id) => axios.get(`${apiUrl}/v1/categorias/${id}`);
 
 const listarCategorias = () => axios.get(`${apiUrl}/v1/categorias`);
 
+const cadastrarCategoria = (categoria) => axios.post(`${apiUrl}/v1/categorias?categoria=${categoria}`);
+
 const atualizarCategoria = (id, categoria) => axios.put(`${apiUrl}/v1/categorias/${id}?categoria=${categoria}`);
 
-export { obterCategoria, listarCategorias, atualizarCategoria };
+export { obterCategoria, listarCategorias, cadastrarCategoria, atualizarCategoria };

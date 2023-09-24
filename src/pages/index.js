@@ -1,7 +1,7 @@
 import Categorias from './categorias';
-import AlterarCategoria from './categorias/alterar';
+import CadastroCategoria from './categorias/cadastro';
 
 import Contas from './contas';
-import AlterarConta from './contas/alterar';
+import CadastroConta from './contas/cadastro';
 
-export { Categorias, AlterarCategoria, Contas, AlterarConta };
+export { Categorias, CadastroCategoria, Contas, CadastroConta };

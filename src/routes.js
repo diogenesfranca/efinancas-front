@@ -3,7 +3,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 //
-import { Categorias, AlterarCategoria, Contas, AlterarConta } from './pages';
+import { Categorias, CadastroCategoria, Contas, CadastroConta } from './pages';
 import Page404 from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -16,9 +16,11 @@ export default function Router() {
       children: [
         { element: <Navigate to="/categorias" />, index: true },
         { path: 'categorias', element: <Categorias /> },
-        { path: 'categorias/alterar/:id', element: <AlterarCategoria /> },
+        { path: 'categorias/cadastro', element: <CadastroCategoria /> },
+        { path: 'categorias/cadastro/:id', element: <CadastroCategoria /> },
         { path: 'contas', element: <Contas /> },
-        { path: 'contas/alterar/:id', element: <AlterarConta /> }
+        { path: 'contas/cadastro', element: <CadastroConta /> },
+        { path: 'contas/cadastro/:id', element: <CadastroConta /> }
       ],
     },    
     {
