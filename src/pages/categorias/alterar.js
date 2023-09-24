@@ -1,11 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 import { Button, Container, Stack, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { atualizarCategoria, obterCategoria } from 'src/apis/eFinancasApi';
+import { atualizarCategoria, obterCategoria } from 'src/apis/eFinancasCategoriasApi';
 import { useNavigate, useParams } from 'react-router-dom';
  
-export default function CategoriasPage() {
-
+export default function () {
   const navigate = useNavigate();
   const [categoria, setCategoria] = useState(null);
   const { id } = useParams();

@@ -10,6 +10,11 @@ const navConfig = [
     title: 'categorias',
     path: '/categorias',
     icon: icon('ic_analytics'),
+  },
+  {
+    title: 'contas',
+    path: '/contas',
+    icon: icon('ic_analytics'),
   }
 ];
 

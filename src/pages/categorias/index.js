@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Container, MenuItem, Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
-import { listarCategorias } from 'src/apis/eFinancasApi';
+import { listarCategorias } from 'src/apis/eFinancasCategoriasApi';
 import Iconify from 'src/components/iconify';
 import { useNavigate } from "react-router-dom";
 
@@ -13,24 +13,19 @@ function AlterarButton({ id }) {
 
 const columns: GridColDef[] = [
   { field: 'descricao', headerName: 'Categoria', width: 160 },
-  {
-    field: 'acao', headerName: 'Ação', sortable: false, width: 130, renderCell: (params) => {
-
-      return <AlterarButton id={params.id} />;
-    }
-  }
+  { field: 'acao', headerName: 'Ação', sortable: false, width: 130, renderCell: params => <AlterarButton id={params.id} /> }
 ];
 
-export default function CategoriasPage() {
-
+export default function () {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    listarCategorias().then((response) => {
+    async function carregarDados() {
+      const response = await listarCategorias();
       setRows(response.data);
-    });
-  }, []
-  );
+    }
+    carregarDados();    
+  }, []);
 
   return (
     <>
