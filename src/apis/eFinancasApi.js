@@ -1,8 +1,10 @@
 import axios from "axios";
 import apiUrl from "./apiUrl";
 
-const listarCategorias = () => {
-    return axios.get(`${apiUrl}/v1/categorias`);
-};
+const obterCategoria = (id) => axios.get(`${apiUrl}/v1/categorias/${id}`);
 
-export { listarCategorias };
+const listarCategorias = () => axios.get(`${apiUrl}/v1/categorias`);
+
+const atualizarCategoria = (id, categoria) => axios.put(`${apiUrl}/v1/categorias/${id}?categoria=${categoria}`);
+
+export { obterCategoria, listarCategorias, atualizarCategoria };

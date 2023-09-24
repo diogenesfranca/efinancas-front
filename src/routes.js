@@ -3,7 +3,8 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 //
-import CategoriasPage from './pages/CategoriasPage';
+import CategoriasPage from './pages/categorias/CategoriasPage';
+import AlterarCategoriaPage from './pages/categorias/AlterarCategoriaPage';
 import Page404 from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -15,7 +16,8 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/categorias" />, index: true },
-        { path: 'categorias', element: <CategoriasPage /> }        
+        { path: 'categorias', element: <CategoriasPage /> },
+        { path: 'categorias/alterar/:id', element: <AlterarCategoriaPage /> }
       ],
     },
     {
