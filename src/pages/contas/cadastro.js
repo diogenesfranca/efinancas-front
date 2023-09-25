@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { atualizarConta, cadastrarConta, obterConta } from 'src/apis/eFinancasContasApi';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function () {
+export default function CadastroConta () {
   const navigate = useNavigate();
   const [conta, setConta] = useState("");
   const [saldo, setSaldo] = useState(0);
@@ -20,7 +20,7 @@ export default function () {
     if (id)
       carregarDados();
 
-  }, []);
+  }, [id]);
 
   async function salvarConta(id, conta, saldo) {
     try {

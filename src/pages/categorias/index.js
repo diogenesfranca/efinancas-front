@@ -8,13 +8,13 @@ import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tabela from 'src/components/tabela';
 
-export default function () {
+export default function Categorias () {
   const navigate = useNavigate();
 
   const [rows, setRows] = useState([]);
   const [itemRemovido, setItemRemovido] = useState('');
 
-  const removerConfirmacao = async function (id, descricao) {
+  async function removerConfirmacao (id, descricao) {
     if (window.confirm(`Deseja realmente remover a categoria ${descricao}?`) === true) {
       try {
         await removerCategoria(id);

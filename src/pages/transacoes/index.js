@@ -12,7 +12,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { capitalizeFirstLetter } from 'src/utils/capitalize';
 
-export default function () {
+export default function Transacoes() {
   const navigate = useNavigate();
 
   const [rows, setRows] = useState([]);
@@ -20,7 +20,7 @@ export default function () {
   const { tipo } = useParams();
   const tipoTransacao = tipo === 'despesas' ? 'despesa' : 'receita';
 
-  const removerConfirmacao = async function (id, descricao) {
+  async function removerConfirmacao (id, descricao) {
     if (window.confirm(`Deseja realmente remover a ${tipoTransacao} ${descricao}?`) === true) {
       try {
         if (tipoTransacao === 'despesa')
@@ -60,7 +60,7 @@ export default function () {
       const categorias = (await listarCategorias()).data;
 
       let transacoes;
-      
+
       if (tipoTransacao === 'despesa')
         transacoes = (await listarDespesas()).data;
       else
@@ -82,15 +82,15 @@ export default function () {
 function obterLinhas(transacoes, contas, categorias) {
   return transacoes.map(linha => {
     const conta = contas.find(conta => conta.id === linha.idConta);
-    
+
     if (conta)
       linha.conta = conta.descricao;
 
     let descricoesCategorias = '';
-    
+
     linha.idsCategorias.forEach(idCategoria => {
-        const categoria = categorias.find(c => c.id === idCategoria);
-        descricoesCategorias = `${descricoesCategorias} ${categoria.descricao}`;
+      const categoria = categorias.find(c => c.id === idCategoria);
+      descricoesCategorias = `${descricoesCategorias} ${categoria.descricao}`;
     });
 
     linha.categorias = descricoesCategorias;
