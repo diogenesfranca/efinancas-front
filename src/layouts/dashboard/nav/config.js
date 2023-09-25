@@ -15,6 +15,16 @@ const navConfig = [
     title: 'contas',
     path: '/contas',
     icon: icon('ic_analytics'),
+  },
+  {
+    title: 'despesas',
+    path: '/transacoes/despesas',
+    icon: icon('ic_analytics'),
+  },
+  {
+    title: 'receitas',
+    path: '/transacoes/receitas',
+    icon: icon('ic_analytics'),
   }
 ];
 
