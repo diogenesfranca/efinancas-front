@@ -20,7 +20,7 @@ export default function Transacoes() {
   const { tipo } = useParams();
   const tipoTransacao = tipo === 'despesas' ? 'despesa' : 'receita';
 
-  async function removerConfirmacao (id, descricao) {
+  async function removerConfirmacao(id, descricao) {
     if (window.confirm(`Deseja realmente remover a ${tipoTransacao} ${descricao}?`) === true) {
       try {
         if (tipoTransacao === 'despesa')
@@ -36,7 +36,7 @@ export default function Transacoes() {
   }
 
   const columns: GridColDef[] = [
-    { field: 'descricao', headerName: 'Conta', width: 160 },
+    { field: 'descricao', headerName: 'Descrição', width: 160 },
     { field: 'valor', headerName: 'Valor', width: 160 },
     { field: 'data', headerName: 'Data', width: 160 },
     { field: 'conta', headerName: 'Conta', width: 160 },
@@ -44,7 +44,7 @@ export default function Transacoes() {
     {
       field: 'acao', headerName: 'Ação', sortable: false, width: 260, renderCell: params =>
         <>
-          <MenuItem onClick={() => navigate(`/contas/cadastro/${params.id}`)}>
+          <MenuItem onClick={() => navigate(`/transacoes/cadastro/${tipo}/${params.id}`)}>
             <CreateIcon />Alterar
           </MenuItem>
           <MenuItem onClick={() => { removerConfirmacao(params.id, params.row.descricao) }}>
@@ -74,7 +74,7 @@ export default function Transacoes() {
   return (
     <>
       <Helmet><title>EFinancas</title></Helmet>
-      <Tabela titulo={`${capitalizeFirstLetter(tipoTransacao)}s`} textoBotao={`Cadastrar ${tipoTransacao}`} rows={rows} columns={columns} onClick={() => { navigate('/contas/cadastro') }} />
+      <Tabela titulo={`${capitalizeFirstLetter(tipoTransacao)}s`} textoBotao={`Cadastrar ${tipoTransacao}`} rows={rows} columns={columns} onClick={() => { navigate(`/transacoes/cadastro/${tipo}`) }} />
     </>
   );
 }

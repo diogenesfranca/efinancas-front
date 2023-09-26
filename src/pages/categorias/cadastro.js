@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { cadastrarCategoria, atualizarCategoria, obterCategoria } from 'src/apis/eFinancasCategoriasApi';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function CadastroCategoria () {
+export default function CadastroCategoria() {
   const navigate = useNavigate();
   const [categoria, setCategoria] = useState("");
   const { id } = useParams();
@@ -21,7 +21,7 @@ export default function CadastroCategoria () {
 
   async function salvarCategoria(id, categoria) {
     try {
-      if(id)
+      if (id)
         await atualizarCategoria(id, categoria)
       else
         await cadastrarCategoria(categoria);

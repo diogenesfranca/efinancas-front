@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { atualizarConta, cadastrarConta, obterConta } from 'src/apis/eFinancasContasApi';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function CadastroConta () {
+export default function CadastroConta() {
   const navigate = useNavigate();
   const [conta, setConta] = useState("");
   const [saldo, setSaldo] = useState(0);
@@ -24,11 +24,11 @@ export default function CadastroConta () {
 
   async function salvarConta(id, conta, saldo) {
     try {
-      if(id)
+      if (id)
         await atualizarConta(id, conta, saldo);
       else
         await cadastrarConta(conta, saldo);
-      
+
       return navigate('/contas');
     }
     catch (e) {
@@ -43,7 +43,7 @@ export default function CadastroConta () {
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-        {`${id ? 'Alterar' : 'Cadastrar'} Conta`}
+          {`${id ? 'Alterar' : 'Cadastrar'} Conta`}
         </Typography>
         <Stack spacing={2}>
           <TextField label="Conta" variant="outlined" value={conta} onChange={e => setConta(e.target.value)} />

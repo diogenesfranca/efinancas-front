@@ -3,7 +3,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 //
-import { Categorias, CadastroCategoria, Contas, CadastroConta, Transacoes } from './pages';
+import { Categorias, CadastroCategoria, Contas, CadastroConta, Transacoes, CadastroTransacao } from './pages';
 import Page404 from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -22,6 +22,8 @@ export default function Router() {
         { path: 'contas/cadastro', element: <CadastroConta /> },
         { path: 'contas/cadastro/:id', element: <CadastroConta /> },
         { path: 'transacoes/:tipo', element: <Transacoes /> },
+        { path: 'transacoes/cadastro/:tipo', element: <CadastroTransacao /> },
+        { path: 'transacoes/cadastro/:tipo/:id', element: <CadastroTransacao /> }
       ],
     },    
     {
