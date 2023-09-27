@@ -1,20 +1,29 @@
 import { Helmet } from 'react-helmet-async';
-import { Button, Container, Stack, TextField, Typography } from '@mui/material';
+import { Button, Container, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { atualizarDespesa, cadastrarDespesa, obterDespesa } from 'src/apis/eFinancasDespesasApi';
 import { atualizarReceita, cadastrarReceita, obterReceita } from 'src/apis/eFinancasReceitasApi';
 import { useNavigate, useParams } from 'react-router-dom';
+import { listarContas } from 'src/apis/eFinancasContasApi';
 
 export default function CadastroTransacao() {
   const navigate = useNavigate();
+  const [contas, setContas] = useState([]);
   const [descricao, setDescricao] = useState('');
   const [valor, setValor] = useState(0);
-  const [data, setData] = useState(Date.now());
+  const [data, setData] = useState(obterDataAtual());
+  const [idConta, setIdConta] = useState('');
   const { tipo, id } = useParams();
   const tipoTransacao = tipo === 'despesas' ? 'despesa' : 'receita';
 
   useEffect(() => {
     async function carregarDados() {
+      const contas = (await listarContas()).data;
+      setContas(contas);
+
+      if (!id)
+        return;
+
       let transacao;
 
       if (tipo === 'despesas')
@@ -25,11 +34,10 @@ export default function CadastroTransacao() {
       setDescricao(transacao.descricao);
       setValor(transacao.valor);
       setData(transacao.data);
+      setIdConta(transacao.idConta);
     }
 
-    if (id)
-      carregarDados();
-
+    carregarDados();
   }, [tipo, id]);
 
   async function salvarTransacao() {
@@ -56,9 +64,24 @@ export default function CadastroTransacao() {
           <TextField label="Descrição" variant="outlined" value={descricao} onChange={e => setDescricao(e.target.value)} />
           <TextField label="Valor" variant="outlined" value={valor} onChange={e => setValor(e.target.value)} type="number" />
           <TextField label="Data" variant="outlined" value={data} onChange={e => setData(e.target.value)} type="date" />
+          <FormControl fullWidth>
+            <InputLabel>Conta</InputLabel>
+            <Select
+              value={idConta}
+              label="Conta"
+              onChange={e => setIdConta(e.target.value)}
+            >
+              {contas.map(c => <MenuItem key={c.id} value={c.id}>{c.descricao}</MenuItem>)}
+            </Select>
+          </FormControl>
           <div> <Button variant="contained" onClick={() => salvarTransacao()}>Salvar</Button> </div>
         </Stack>
       </Container>
     </>
   );
+}
+
+function obterDataAtual() {
+  const date = new Date();
+  return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
 }
