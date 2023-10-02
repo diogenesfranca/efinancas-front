@@ -1,7 +1,7 @@
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
-export default function Tabela({ titulo, textoBotao, rows, columns, onClick }) {
+export default function Tabela({ titulo, textoBotao, rows, columns, onClick, children }) {
     return (
         <Container maxWidth="xl">
             <Typography variant="h4" sx={{ mb: 5 }}> {titulo} </Typography>
@@ -14,7 +14,8 @@ export default function Tabela({ titulo, textoBotao, rows, columns, onClick }) {
                     }}
                     pageSizeOptions={[10, 20]}
                 />
-                <div> <Button variant="contained" onClick={() => onClick()}>{textoBotao}</Button> </div>
+                {textoBotao && <div> <Button variant="contained" onClick={() => onClick()}>{textoBotao}</Button> </div>}
+                {children}
             </Stack>
         </Container>
     );
